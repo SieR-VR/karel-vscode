@@ -10,15 +10,18 @@ import {
     CompletionItemKind,
     TextDocumentPositionParams,
     TextDocumentSyncKind,
-    InitializeResult
+    InitializeResult,
 } from 'vscode-languageserver/node';
 
 import {
     TextDocument
 } from 'vscode-languageserver-textdocument';
 
-import { tokenize } from './tokenizer';
-import { parse } from './parser';
+import { isIdentifierToken, isNumberToken, tokenize, TokenKind } from './language/tokenizer';
+import { parse } from './language/parser';
+
+import karelKeyword from './language/keyword.json';
+import karelFunction from './language/function.json';
 
 const connection = createConnection(ProposedFeatures.all);
 const documents: TextDocuments<TextDocument> = new TextDocuments(TextDocument);
@@ -79,55 +82,80 @@ documents.onDidChangeContent(change => {
 async function validateTextDocument(textDocument: TextDocument): Promise<void> {
     const text = textDocument.getText();
 
-    const tokensUnchecked = tokenize(text);
-    if (tokensUnchecked.is_err()) {
-        connection.sendDiagnostics({
-            uri: textDocument.uri,
-            diagnostics: [tokensUnchecked.unwrap_err()]
-        });
-        return;
-    }
+    try {
+        const tokensUnchecked = tokenize(text);
+        if (tokensUnchecked.is_err()) {
+            connection.sendDiagnostics({
+                uri: textDocument.uri,
+                diagnostics: [tokensUnchecked.unwrap_err()]
+            });
+            return;
+        }
 
-    const tokens = tokensUnchecked.unwrap();
-    const astUnchecked = parse(tokens);
-    if (astUnchecked.is_err()) {
+        const tokens = tokensUnchecked.unwrap();
+        const astUnchecked = parse(tokens);
+        if (astUnchecked.is_err()) {
+            connection.sendDiagnostics({
+                uri: textDocument.uri,
+                diagnostics: [astUnchecked.unwrap_err()]
+            });
+            return;
+        }
+
         connection.sendDiagnostics({
             uri: textDocument.uri,
-            diagnostics: [astUnchecked.unwrap_err()]
+            diagnostics: []
         });
-        return;
+    } catch (e) {
+        connection.console.error(`Unexpected error while validating document ${textDocument.uri}: ${e}`);
+        connection.sendDiagnostics({
+            uri: textDocument.uri,
+            diagnostics: []
+        });
     }
 }
 
 connection.onCompletion(
     (_textDocumentPosition: TextDocumentPositionParams): CompletionItem[] => {
-        return [
-            {
-                label: 'function',
+        const completionKeywords = Object.entries(karelKeyword.keyword).map(([_, value]) => {
+            const item: CompletionItem = {
+                label: value.label,
                 kind: CompletionItemKind.Keyword,
-                data: 1
-            },
-            {
-                label: 'while',
-                kind: CompletionItemKind.Keyword,
-                data: 2
-            },
-            {
-                label: 'repeat',
-                kind: CompletionItemKind.Keyword,
-                data: 3
-            },
-            {
-                label: 'if',
-                kind: CompletionItemKind.Keyword,
-                data: 4
-            },
-            {
-                label: 'else',
-                kind: CompletionItemKind.Keyword,
-                data: 5
-            },
-        ];
+                data: value.data,
+            };
+            return item;
+        });
+
+        const completionFunctions = Object.entries(karelFunction.function).map(([_, value]) => {
+            const item: CompletionItem = {
+                label: value.label,
+                kind: CompletionItemKind.Function,
+                data: value.data,
+            };
+            return item;
+        });
+
+        return [...completionKeywords, ...completionFunctions];
+    }
+);
+
+connection.onCompletionResolve(
+    (item: CompletionItem): CompletionItem => {
+        const [category, name] = (item.data as string).split('/') as [string, string];
+
+        if (category === 'keyword') {
+            const keywordName = name as keyof typeof karelKeyword.keyword;
+            const keyword = karelKeyword.keyword[keywordName];
+            item.detail = keyword.detail;
+            item.documentation = keyword.documentation;
+        } else if (category === 'function') {
+            const functionName = name as keyof typeof karelFunction.function;
+            const func = karelFunction.function[functionName];
+            item.detail = func.detail;
+            item.documentation = func.documentation;
+        }
+
+        return item;
     }
 );
 

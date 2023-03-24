@@ -45,9 +45,27 @@ function parseFunctionDeclaration(input: Token[], startPos: number): Result<Func
         startPos,
         endPos: 0
     } as FunctionDeclaration;
+    const lastToken = input[input.length - 1];
 
     let current = startPos + 1;
     const functionIdentifer = input[current];
+    if (!functionIdentifer) {
+        return Err({
+            message: 'Unexpected end of file',
+            severity: DiagnosticSeverity.Error,
+            range: {
+                start: {
+                    line: lastToken.line,
+                    character: lastToken.col
+                },
+                end: {
+                    line: lastToken.line,
+                    character: lastToken.col + (lastToken.endPos - lastToken.startPos)
+                }
+            }
+        });
+    }
+
     if (!isIdentifierToken(functionIdentifer)) {
         return Err({
             message: 'Expected identifier',

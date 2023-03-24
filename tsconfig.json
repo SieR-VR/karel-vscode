@@ -8,6 +8,9 @@
 		"strict": true,
 		"outDir": "out",
 		"composite": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true
 	},
+	"include": ["./**/*.ts", "./**/*.json"],
 	"exclude": ["node_modules", ".vscode-test", "out"]
 }

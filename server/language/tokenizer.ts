@@ -108,8 +108,20 @@ export function tokenize(input: string): Result<Token[], Diagnostic> {
             let value = '';
 
             while (NUMBERS.test(char)) {
+                if (current >= input.length) {
+                    return Err({
+                        message: `Unexpected end of input`,
+                        severity: DiagnosticSeverity.Error,
+                        range: {
+                            start: { line, character: col },
+                            end: { line, character: col + 1 }
+                        },
+                    });
+                }
+
                 value += char;
                 char = input[++current];
+                col++;
             }
 
             const numValue = parseInt(value);
@@ -123,16 +135,26 @@ export function tokenize(input: string): Result<Token[], Diagnostic> {
                 col
             });
 
-            col += value.length;
             continue;
         }
 
         const LETTERS_FIRST = /[a-zA-Z_]/i;
         if (LETTERS_FIRST.test(char)) {
-            let value = '';
+            let value = "";
 
             const LETTERS = /[a-zA-Z0-9_]/i;
             while (LETTERS.test(char)) {
+                if (current >= input.length) {
+                    return Err({
+                        message: `Unexpected end of input`,
+                        severity: DiagnosticSeverity.Error,
+                        range: {
+                            start: { line, character: col },
+                            end: { line, character: col + 1 }
+                        },
+                    });
+                }
+
                 value += char;
                 char = input[++current];
             }
@@ -210,6 +232,7 @@ export interface IdentifierToken extends Token {
 }
 
 export function isIdentifierToken(token: Token): token is IdentifierToken {
+    console.log(token);
     return token.kind === TokenKind.Identifier;
 }
 
@@ -219,5 +242,6 @@ export interface NumberToken extends Token {
 }
 
 export function isNumberToken(token: Token): token is NumberToken {
+    console.log(token);
     return token.kind === TokenKind.Number;
 }

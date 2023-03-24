@@ -1,5 +1,5 @@
 import * as path from 'path';
-import { workspace, ExtensionContext } from 'vscode';
+import { workspace, ExtensionContext, window } from 'vscode';
 
 import {
     LanguageClient,
@@ -13,7 +13,7 @@ let client: LanguageClient;
 export function activate(context: ExtensionContext) {
     // The server is implemented in node
     const serverModule = context.asAbsolutePath(
-        path.join(__dirname, '..', 'server', 'server.js')
+        path.join("out", 'server', 'server.js')
     );
 
     // If the extension is launched in debug mode then the debug server options are used
@@ -29,11 +29,7 @@ export function activate(context: ExtensionContext) {
     // Options to control the language client
     const clientOptions: LanguageClientOptions = {
         // Register the server for plain text documents
-        documentSelector: [{ scheme: 'file', pattern: '**/*.karel' }],
-        synchronize: {
-            // Notify the server about file changes to '.clientrc files contained in the workspace
-            fileEvents: workspace.createFileSystemWatcher('**/.clientrc')
-        }
+        documentSelector: [{ scheme: 'file', pattern: '**/*.karel', language: 'karel' }],
     };
 
     // Create the language client and start the client.
@@ -46,6 +42,8 @@ export function activate(context: ExtensionContext) {
 
     // Start the client. This will also launch the server
     client.start();
+
+    console.log('Karel Language Server is now active!');
 }
 
 export function deactivate(): Thenable<void> | undefined {

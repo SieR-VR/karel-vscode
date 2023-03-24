@@ -1,0 +1,34 @@
+{
+    "keyword": {
+        "function": {
+            "label": "function",
+            "data": "keyword/function",
+            "detail": "function keyword",
+            "documentation": "A keyword for defining a function"
+        },
+        "while": {
+            "label": "while",
+            "data": "keyword/while",
+            "detail": "while keyword",
+            "documentation": "A keyword for defining a while loop"
+        },
+        "repeat": {
+            "label": "repeat",
+            "data": "keyword/repeat",
+            "detail": "repeat keyword",
+            "documentation": "A keyword for defining a repeat loop"
+        },
+        "if": {
+            "label": "if",
+            "data": "keyword/if",
+            "detail": "if keyword",
+            "documentation": "A keyword for defining an if statement"
+        },
+        "else": {
+            "label": "else",
+            "data": "keyword/else",
+            "detail": "else keyword",
+            "documentation": "A keyword for defining an else statement"
+        }
+    }
+}

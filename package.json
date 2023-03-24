@@ -15,11 +15,16 @@
   "categories": [
     "Programming Languages"
   ],
-  "activationEvents": [
-    "onLanguage:karel"
-  ],
-  "main": "./out/extension.js",
-  "contributes": {},
+  "main": "./out/client/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "karel",
+        "extensions": [".karel"],
+        "aliases": ["Karel", "karel"]
+      }
+    ]
+  },
   "scripts": {
     "vscode:prepublish": "yarn run compile",
     "compile": "tsc -p ./",

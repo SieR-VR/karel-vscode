@@ -1,0 +1,124 @@
+{
+    "function": {
+        "move": {
+            "label": "move",
+            "data": "function/move",
+            "detail": "move function",
+            "documentation": "This function makes karel move forward one space."
+        },
+        "turnLeft": {
+            "label": "turnLeft",
+            "data": "function/turnLeft",
+            "detail": "turnLeft function",
+            "documentation": "This function makes karel turn left."
+        },
+        "pickBeeper": {
+            "label": "pickBeeper",
+            "data": "function/pickBeeper",
+            "detail": "pickBeeper function",
+            "documentation": "This function makes karel pick up a beeper."
+        },
+        "putBeeper": {
+            "label": "putBeeper",
+            "data": "function/putBeeper",
+            "detail": "putBeeper function",
+            "documentation": "This function makes karel put down a beeper."
+        },
+        "frontIsClear": {
+            "label": "frontIsClear",
+            "data": "function/frontIsClear",
+            "detail": "frontIsClear function",
+            "documentation": "This function returns true if there is no wall in front of karel."
+        },
+        "leftIsClear": {
+            "label": "leftIsClear",
+            "data": "function/leftIsClear",
+            "detail": "leftIsClear function",
+            "documentation": "This function returns true if there is no wall to the left of karel."
+        },
+        "rightIsClear": {
+            "label": "rightIsClear",
+            "data": "function/rightIsClear",
+            "detail": "rightIsClear function",
+            "documentation": "This function returns true if there is no wall to the right of karel."
+        },
+        "frontIsBlocked": {
+            "label": "frontIsBlocked",
+            "data": "function/frontIsBlocked",
+            "detail": "frontIsBlocked function",
+            "documentation": "This function returns true if there is a wall in front of karel."
+        },
+        "leftIsBlocked": {
+            "label": "leftIsBlocked",
+            "data": "function/leftIsBlocked",
+            "detail": "leftIsBlocked function",
+            "documentation": "This function returns true if there is a wall to the left of karel."
+        },
+        "rightIsBlocked": {
+            "label": "rightIsBlocked",
+            "data": "function/rightIsBlocked",
+            "detail": "rightIsBlocked function",
+            "documentation": "This function returns true if there is a wall to the right of karel."
+        },
+        "beepersPresent": {
+            "label": "beepersPresent",
+            "data": "function/beepersPresent",
+            "detail": "beepersPresent function",
+            "documentation": "This function returns true if there is a beeper on the current space."
+        },
+        "noBeepersPresent": {
+            "label": "noBeepersPresent",
+            "data": "function/noBeepersPresent",
+            "detail": "noBeepersPresent function",
+            "documentation": "This function returns true if there is no beeper on the current space."
+        },
+        "facingNorth": {
+            "label": "facingNorth",
+            "data": "function/facingNorth",
+            "detail": "facingNorth function",
+            "documentation": "This function returns true if karel is facing north."
+        },
+        "facingSouth": {
+            "label": "facingSouth",
+            "data": "function/facingSouth",
+            "detail": "facingSouth function",
+            "documentation": "This function returns true if karel is facing south."
+        },
+        "facingEast": {
+            "label": "facingEast",
+            "data": "function/facingEast",
+            "detail": "facingEast function",
+            "documentation": "This function returns true if karel is facing east."
+        },
+        "facingWest": {
+            "label": "facingWest",
+            "data": "function/facingWest",
+            "detail": "facingWest function",
+            "documentation": "This function returns true if karel is facing west."
+        },
+        "notFacingNorth": {
+            "label": "notFacingNorth",
+            "data": "function/notFacingNorth",
+            "detail": "notFacingNorth function",
+            "documentation": "This function returns true if karel is not facing north."
+        },
+        "notFacingSouth": {
+            "label": "notFacingSouth",
+            "data": "function/notFacingSouth",
+            "detail": "notFacingSouth function",
+            "documentation": "This function returns true if karel is not facing south."
+        },
+        "notFacingEast": {
+            "label": "notFacingEast",
+            "data": "function/notFacingEast",
+            "detail": "notFacingEast function",
+            "documentation": "This function returns true if karel is not facing east."
+        },
+        "notFacingWest": {
+            "label": "notFacingWest",
+            "data": "function/notFacingWest",
+            "detail": "notFacingWest function",
+            "documentation": "This function returns true if karel is not facing west."
+        }
+    }
+}
