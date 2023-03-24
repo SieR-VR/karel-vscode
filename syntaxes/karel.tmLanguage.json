@@ -1,0 +1,190 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "karel",
+    "scopeName": "source.karel",
+    "patterns": [
+        {
+            "include": "#function"
+        }
+    ],
+    "repository": {
+        "function": {
+            "patterns": [
+                {
+                    "begin": "(function)\\s*([_a-zA-Z][_a-zA-Z0-9]*)\\(\\s*\\)\\s*\\{",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "storage.modifier"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    },
+                    "end": "\\}",
+                    "patterns": [
+                        {
+                            "include": "#while"
+                        },
+                        {
+                            "include": "#repeat"
+                        },
+                        {
+                            "include": "#if"
+                        },
+                        {
+                            "include": "#else"
+                        },
+                        {
+                            "include": "#expression"
+                        }
+                    ]
+                }
+            ]
+        },
+        "while": {
+            "patterns": [
+                {
+                    "begin": "(while)\\s*\\(\\s*([_a-zA-Z][_a-zA-Z0-9]*)\\s*\\(\\s*\\)\\s*\\)\\s*\\{",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "storage.modifier"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    },
+                    "end": "\\}",
+                    "patterns": [
+                        {
+                            "include": "$self"
+                        },
+                        {
+                            "include": "#repeat"
+                        },
+                        {
+                            "include": "#if"
+                        },
+                        {
+                            "include": "#else"
+                        },
+                        {
+                            "include": "#expression"
+                        }
+                    ]
+                }
+            ]
+        },
+        "repeat": {
+            "patterns": [
+                {
+                    "begin": "(repeat)\\s*\\(\\s*([0-9]*)\\s*\\)\\s*\\{",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "storage.modifier"
+                        },
+                        "2": {
+                            "name": "constant.numeric"
+                        }
+                    },
+                    "end": "\\}",
+                    "name": "meta.repeat.karel",
+                    "patterns": [
+                        {
+                            "include": "#while"
+                        },
+                        {
+                            "include": "$self"
+                        },
+                        {
+                            "include": "#if"
+                        },
+                        {
+                            "include": "#else"
+                        },
+                        {
+                            "include": "#expression"
+                        }
+                    ]
+                }
+            ]
+        },
+        "if": {
+            "patterns": [
+                {
+                    "begin": "(if)\\s*\\(\\s*([_a-zA-Z][_a-zA-Z0-9]*)\\s*\\(\\s*\\)\\s*\\)\\s*\\{",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "storage.modifier"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    },
+                    "end": "\\}",
+                    "patterns": [
+                        {
+                            "include": "#while"
+                        },
+                        {
+                            "include": "#repeat"
+                        },
+                        {
+                            "include": "$self"
+                        },
+                        {
+                            "include": "#else"
+                        },
+                        {
+                            "include": "#expression"
+                        }
+                    ]
+                }
+            ]
+        },
+        "else": {
+            "patterns": [
+                {
+                    "begin": "(else)\\s*\\{",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "storage.modifier"
+                        },
+                        "2": {
+                            "name": "entity.name.function"
+                        }
+                    },
+                    "end": "\\}",
+                    "patterns": [
+                        {
+                            "include": "#while"
+                        },
+                        {
+                            "include": "#repeat"
+                        },
+                        {
+                            "include": "#if"
+                        },
+                        {
+                            "include": "$self"
+                        },
+                        {
+                            "include": "#expression"
+                        }
+                    ]
+                }
+            ]
+        },
+        "expression": {
+            "patterns": [
+                {
+                    "match": "([_a-zA-Z][_a-zA-Z0-9]*)\\s*\\(\\s*\\)\\s*;",
+                    "captures": {
+                        "1": {
+                            "name": "entity.name.function"
+                        }
+                    }
+                }
+            ]
+        }
+    }
+}

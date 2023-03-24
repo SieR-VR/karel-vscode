@@ -1,8 +1,6 @@
 import {
     createConnection,
     TextDocuments,
-    Diagnostic,
-    DiagnosticSeverity,
     ProposedFeatures,
     InitializeParams,
     DidChangeConfigurationNotification,
@@ -12,12 +10,11 @@ import {
     TextDocumentSyncKind,
     InitializeResult,
 } from 'vscode-languageserver/node';
-
 import {
     TextDocument
 } from 'vscode-languageserver-textdocument';
 
-import { isIdentifierToken, isNumberToken, tokenize, TokenKind } from './language/tokenizer';
+import { tokenize } from './language/tokenizer';
 import { parse } from './language/parser';
 
 import karelKeyword from './language/keyword.json';

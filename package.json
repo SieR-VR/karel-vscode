@@ -21,7 +21,15 @@
       {
         "id": "karel",
         "extensions": [".karel"],
-        "aliases": ["Karel", "karel"]
+        "aliases": ["Karel", "karel"],
+        "configuration": "./syntaxes/language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "karel",
+        "scopeName": "source.karel",
+        "path": "./syntaxes/karel.tmLanguage.json"
       }
     ]
   },

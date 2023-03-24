@@ -7,8 +7,8 @@ import {
 export function tokenize(input: string): Result<Token[], Diagnostic> {
     const tokens = [] as Token[];
     let current = 0;
-    let line = 1;
-    let col = 1;
+    let line = 0;
+    let col = 0;
 
     while (current < input.length) {
         let char = input[current];
@@ -99,7 +99,7 @@ export function tokenize(input: string): Result<Token[], Diagnostic> {
         if (LF.test(char)) {
             current++;
             line++;
-            col = 1;
+            col = 0;
             continue;
         }
 
